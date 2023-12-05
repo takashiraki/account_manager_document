@@ -1,0 +1,112 @@
+@startuml Accout manager class diagram
+package Account {
+    class Account {
+        - account_id : AccountId
+        - account_name : AccountName
+        - account_category : AccountCategory
+        + accountId() :AccountId
+        + accoutName() : AccountName
+        + accountCategory() : AccountCategory
+    }
+
+    class AccountId {
+        - value : string
+    }
+
+    class AccountDetail {
+        - account_id : AccountId
+        - aoccount_login_id : AccountLoginId
+        - account_password : AccountPassword
+        + accountLoginId() :AccountLoginId
+        + accountPassword() : AccountPassword
+    }
+
+    Account ||--||AccountDetail
+
+    Account *-- AccountId
+    AccountDetail *-- AccountId
+
+    class AccountCategory {
+        - category_id :CategoryId
+        - category_name : CategoryName
+        + categoryId() : CategoryId
+        + categoryName() : CategoryName
+    }
+
+    class CategoryId {
+        - value : string
+    }
+    
+    AccountCategory *-- CategoryId
+    Account o-d-- CategoryId
+}
+
+package User {
+    class User {
+        - user_id : UserId
+        - user_name : UserName
+        - user_email : UserEmail
+        - user_status : UserStatus
+        - hashed_password : HashedPassword
+        + userId() : UserId
+        + userName() : UserName
+        + email() : Email
+    }
+
+    class UserId {
+        - value : string
+    }
+
+    User *-- UserId
+
+    class LoginHistory {
+        - login_id : loginId
+        - user_id : UserId
+    }
+
+    class LoginId {
+        - value : string
+    }
+
+    LoginHistory *-- LoginId
+    LoginHistory o-- UserId
+
+    class PasswordReset {
+        - reset_id : ResetId
+        - user_id : UserId
+        + resetId() : ResetId
+        + userId() : UserId
+    }
+
+    class ResetId {
+        - value : string
+    }
+
+    PasswordReset *-- ResetId
+    PasswordReset o-- UserId
+}
+
+package Loan {
+    class Loan {
+        - loan_id : LoanId
+        - account_id : AccountId
+        - user_id : UserId
+    }
+
+    class LoanId {
+        - value : string
+    }
+
+    class LoanHistory {
+        user_id : UserId
+        account_id: AccountId
+    }
+
+    LoanHistory o-- UserId
+    LoanHistory o-- AccountId
+
+    Loan *-- LoanId
+    Loan o-- UserId
+    Loan o-- AccountId
+}
+@enduml
